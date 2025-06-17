@@ -1,6 +1,6 @@
-# CTFd REST API Load Testing with Playwright
+# CTFd API Load Testing with Playwright
 
-This document provides instructions for setting up and running REST API-focused load tests against your CTFd application using Playwright. This setup is optimized for high-performance REST API testing, bypassing full UI rendering for each request and and using a pre-authenticated session.
+This document provides instructions for setting up and running API-focused load tests against your CTFd application using Playwright. This setup is optimized for high-performance API testing, bypassing full UI rendering for each request and and using a pre-authenticated session.
 
 ## **System Requirements:**
 
@@ -16,9 +16,17 @@ To run these load tests, you will need the following installed on your system:
 
 ## **Overview of Files:**
 
-* **`apiUserFlow.js`**: This is the core Playwright script that defines a single user's REST API journey. It loads a pre-authenticated session and then executes a sequence of API calls (e.g., fetching challenges, scoreboard, users, notifications) with built-in pacing.
-* **`apiLoadTestRunnerDuration.js`**: This is the orchestrator script responsible for running multiple instances of `apiUserFlow.js` concurrently over a defined duration. It collects and analyzes the performance metrics for all REST API calls.
-* **`captureSessionState.js`**: A one-time utility script used to perform an initial web login and save the authenticated session state (`auth.json`), which is then reused by `apiUserFlow.js`.
+```
++-----------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| File                        | Description                                                                                                                                                                         |
++=============================+=====================================================================================================================================================================================+
+| `apiUserFlow.js`            | Core Playwright script defining a single user's API journey. It loads a pre-authenticated session and then executes a sequence of API calls (challenges, scoreboard, users, notifications) with built-in pacing. |
++-----------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| `apiLoadTestRunnerDuration.js`| Orchestrator script. It runs multiple instances of `apiUserFlow.js` concurrently over a defined duration. It collects and analyzes the performance metrics for all API calls.        |
++-----------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| `captureSessionState.js`    | One-time utility script. It performs an initial web login and saves the authenticated session state (`auth.json`). This saved state is then reused by `apiUserFlow.js` to avoid repeated web logins. |
++-----------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+```
 
 ---
 
@@ -61,7 +69,7 @@ These variables must be exported in your terminal session before running the scr
     export CTFD_PASSWORD="your_player_password"
     export CTFD_ADMIN_USERNAME="your_admin_username"
     export CTFD_ADMIN_PASSWORD="your_admin_password"
-    # This one will be set after Step 4
+    # This one will be set after Step 5
     # export CTFD_API_ACCESS_TOKEN="your_obtained_api_token"
     ```
 
@@ -128,5 +136,3 @@ While the test is running, it's crucial to monitor your OpenShift application co
 * **CTFd MySQL Database Pod:**
     * Monitor CPU, Memory, and Database Connections via OpenShift Dashboards (`Workloads > Deployments > ctfd-mysql-db > Metrics`).
     * Check active connections (`oc exec <db-pod-name> ... SHOW STATUS LIKE 'Threads_connected';`).
-
----
