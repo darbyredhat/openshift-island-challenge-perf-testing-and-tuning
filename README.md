@@ -16,17 +16,11 @@ To run these load tests, you will need the following installed on your system:
 
 ## **Overview of Files:**
 
-```
-+-----------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| File                        | Description                                                                                                                                                                         |
-+=============================+=====================================================================================================================================================================================+
-| `apiUserFlow.js`            | Core Playwright script defining a single user's API journey. It loads a pre-authenticated session and then executes a sequence of API calls (challenges, scoreboard, users, notifications) with built-in pacing. |
-+-----------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| `apiLoadTestRunnerDuration.js`| Orchestrator script. It runs multiple instances of `apiUserFlow.js` concurrently over a defined duration. It collects and analyzes the performance metrics for all API calls.        |
-+-----------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| `captureSessionState.js`    | One-time utility script. It performs an initial web login and saves the authenticated session state (`auth.json`). This saved state is then reused by `apiUserFlow.js` to avoid repeated web logins. |
-+-----------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-```
+| File                         | Description                                                                                                                                                                             |
+| :--------------------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `apiUserFlow.js`             | Core Playwright script defining a single user's API journey. It loads a pre-authenticated session and then executes a sequence of API calls (challenges, scoreboard, users, notifications) with built-in pacing. |
+| `apiLoadTestRunnerDuration.js` | Orchestrator script. It runs multiple instances of `apiUserFlow.js` concurrently over a defined duration. It collects and analyzes the performance metrics for all API calls.          |
+| `captureSessionState.js`     | One-time utility script. It performs an initial web login and saves the authenticated session state (`auth.json`). This saved state is then reused by `apiUserFlow.js` to avoid repeated web logins.   |
 
 ---
 
@@ -134,5 +128,8 @@ While the test is running, it's crucial to monitor your OpenShift application co
     ```
     * Monitor CPU and Memory usage via OpenShift Dashboards (`Workloads > Deployments > ctfd > Metrics`).
 * **CTFd MySQL Database Pod:**
+    ```bash
+    oc logs <your-db-pod-name> -n ctfd --tail=50 -f # For general DB logs
+    ```
     * Monitor CPU, Memory, and Database Connections via OpenShift Dashboards (`Workloads > Deployments > ctfd-mysql-db > Metrics`).
     * Check active connections (`oc exec <db-pod-name> ... SHOW STATUS LIKE 'Threads_connected';`).
