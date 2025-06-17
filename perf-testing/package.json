@@ -1,7 +1,7 @@
 {
   "name": "openshift-island-challenge-load-testing",
   "version": "1.0.0",
-  "description": "1.  **Save the files:** Ensure `userFlow.js` and `loadTestRunner.js` are in the same directory. 2.  **Install dependencies:** If you haven't already, open your terminal in the project directory and run:",
+  "description": "1.  **Save the files:** Ensure `apiUserFlow.js` and `apiLoadTestRunnerDuration.js` are in the same directory. 2.  **Install dependencies:** If you haven't already, open your terminal in the project directory and run:",
   "main": "loadTestRunner.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

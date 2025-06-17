@@ -193,4 +193,16 @@ dist
 .history
 .ionide
 
+# Node.js dependencies
+node_modules/
+
+# Playwright artifacts
+test-results/
+trace.zip
+playwright-report/
+
+# CTFd API Load Testing specific
+auth.json
+*.log
+
 # End of https://www.toptal.com/developers/gitignore/api/macos,node,visualstudiocode
