@@ -80,13 +80,12 @@ node captureSessionState.js
 
 ### **Step 4: Obtain API Access Token (Manual Steps via CTFd Web Interface)**
 
-This is the manual method to obtain an API Access Token for your `CTFD_USERNAME` (e.g., `player1`).
+This is the manual method to obtain an API Access Token for your CTFD admin 
 
 1.  **Log in to your CTFd instance** using an **Administrator account** in your web browser.
-2.  In the Admin Panel, go to the **"Users"** section.
-3.  **Click on the username** of the player account you want to generate the token for (e.g., `player1`).
-4.  On the user's profile page, look for a section related to **"API Tokens"** or **"Generate API Key"**.
-5.  Click the button or link to **"Generate"** or "Create" a new API token.
+2. In top right, click **"Settings"**.
+3. Click on the **"Access Tokens"** tab.
+4. Set an expiration for the token (the default is 30 days) and click **"Generate"**.
 6.  A token string will be displayed. **Copy this entire token string carefully.**
 
 Once you have copied the token, you **must set it as an environment variable** in your terminal:
