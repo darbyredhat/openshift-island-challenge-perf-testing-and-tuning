@@ -1,7 +1,3 @@
-Okay, here is the complete, updated README.md file. There were no changes requested since the last time I provided it, as we confirmed the logical order of the steps.
-
----
-
 # CTFd API Load Testing with Playwright
 
 This document provides instructions for setting up and running API-focused load tests against your CTFd application using Playwright. This setup is optimized for high-performance API testing, bypassing full UI rendering for each request and and using a pre-authenticated session.
@@ -35,19 +31,14 @@ To run these load tests, you will need the following installed on your system:
     git clone https://github.com/darbyredhat/openshift-island-challenge-perf-testing-and-tuning
     cd openshift-island-challenge-perf-testing-and-tuning/perf-testing
     ```
-2.  **Initialize Node.js project:**
+2.  **Install npm packages (including Playwright):**
     ```bash
-    npm init -y
-    ```
-3.  **Install Playwright:**
-    ```bash
-    npm install playwright
+    npm install
     npx playwright install
     ```
-    * `npm init -y`: Initializes a new Node.js project, creating a `package.json` file.
-    * `npm install playwright`: Installs the Playwright library.
+    * `npm install`: Installs all dependencies listed in `package.json` (including Playwright).
     * `npx playwright install`: Downloads the necessary browser binaries (Chromium, Firefox, WebKit) for headless execution.
-4.  **Install `jq` (if needed and not already installed via `brew` or your package manager):**
+3.  **Install `jq` (if needed and not already installed via `brew` or your package manager):**
     ```bash
     brew install jq # For macOS
     # sudo apt-get install jq # For Debian/Ubuntu
@@ -70,7 +61,7 @@ These variables must be exported in your terminal session before running the scr
     export CTFD_PASSWORD="your_player_password"
     export CTFD_ADMIN_USERNAME="your_admin_username"
     export CTFD_ADMIN_PASSWORD="your_admin_password"
-    # This one will be set after Step 5
+    # This one will be set after Step 4
     # export CTFD_API_ACCESS_TOKEN="your_obtained_api_token"
     ```
 
