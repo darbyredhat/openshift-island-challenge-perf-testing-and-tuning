@@ -12,7 +12,14 @@ async function runApiUserFlow(userId) {
     let context;
     try {
         console.log(`[User ${userId}] Starting API focused flow with pre-authenticated session...`);
-        browser = await chromium.launch({ headless: true });
+
+        // Launch browser with options to ignore HTTPS errors
+        // This is crucial for the context that will be created from it
+        browser = await chromium.launch({
+            headless: true,
+            ignoreHTTPSErrors: true, // Ignore HTTPS errors for the browser instance
+            args: ['--ignore-certificate-errors'] // Explicit Chromium argument for robustness
+        });
 
         const baseUrl = process.env.CTFD_BASE_URL;
         const apiAccessToken = process.env.CTFD_API_ACCESS_TOKEN; // Get API token for header
@@ -38,7 +45,11 @@ async function runApiUserFlow(userId) {
                 'Authorization': `Token ${apiAccessToken}`, // Add the correct token header
                 'Accept': 'application/json',
                 'X-Requested-With': 'XMLHttpRequest'
-            }
+            },
+            // IMPORTANT: Also apply ignoreHTTPSErrors to the context creation itself
+            // This ensures that API requests made through `page.request` within this context
+            // will also ignore certificate errors, even if the browser launch didn't cover all cases.
+            ignoreHTTPSErrors: true
         });
         const page = await context.newPage();
 
@@ -54,6 +65,8 @@ async function runApiUserFlow(userId) {
             let responseText = null;
 
             try {
+                // Playwright's page.request uses the context's network settings,
+                // which now include ignoreHTTPSErrors
                 const apiResponse = await page.request[method.toLowerCase()](fullUrl, { timeout: 30000 });
                 responseStatus = apiResponse.status();
                 responseOk = apiResponse.ok();
