@@ -16,7 +16,16 @@ const { chromium } = require('playwright');
     let browser;
     let context;
     try {
-        browser = await chromium.launch({ headless: true }); // Run headless for capture
+        // Correctly define browserOptions before using it
+        const browserOptions = {
+            headless: true, // Run headless for capture
+            ignoreHTTPSErrors: true, // Playwright's specific flag
+            args: ['--ignore-certificate-errors'] // Explicit Chromium argument
+        };
+
+        console.log('Launching browser with options:', browserOptions);
+
+        browser = await chromium.launch(browserOptions);
         context = await browser.newContext();
         const page = await context.newPage();
 
